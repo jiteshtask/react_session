@@ -1,11 +1,17 @@
 import React from "react";
 
-class HelloWorld extends React.Component {
+class App extends React.Component {
     render() {
       return (
-        <div>Hello World!</div>
+        <h1>Welcome to React session</h1>
       )
     }
   }
+  
+//   const App = () =>{
+//    return (
+//       <h1>Welcome to React session</h1>
+//    )
+//   };  
 
-export default HelloWorld;
+export default App;
