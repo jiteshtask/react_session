@@ -11,7 +11,7 @@ class AddingState extends React.Component {
 
     render() {
       return (
-      <div>{this.state.message}</div>
+      <h1>{this.state.message}</h1>
       )
     }
   }
