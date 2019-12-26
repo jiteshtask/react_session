@@ -11,7 +11,7 @@
 
 ## Installation
 
-* `git clone https://github.com/swagata-kundu/react-session.git`
+* `git clone https://github.com/jiteshtask/react_session.git`
 * cd react-session
 * npm install
 * npm start
