@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+
 import Conter from "./Counter";
 
-class New extends Component {
+class LifeCycle extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,9 +11,13 @@ class New extends Component {
       list: []
     };
   }
-  componentWillMount() {
-    console.log("now component will mount");
+
+  //The getDerivedStateFromProps() method is called right before rendering the element(s) in the DOM.
+  //This is the natural place to set the state object based on the initial props.
+  static getDerivedStateFromProps(props, state) {
+    return {list: props.list? props.list :state.list };
   }
+
   componentDidMount() {
     console.log("component mounted");
   }
@@ -26,6 +31,7 @@ class New extends Component {
     });
   };
 
+  //componentDidCatch() only works for catching errors thrown by a components children
   componentDidCatch() {
     console.log("error happend");
   }
@@ -37,14 +43,11 @@ class New extends Component {
   render() {
     return (
       <div>
-        <Conter list={this.state.list} />
-
-        <img src="assets/15.png" />
-
         <button onClick={this.increaseCounter}> Try me out</button>
+        <Conter list={this.state.list} />
       </div>
     );
   }
 }
 
-export default New;
+export default LifeCycle;

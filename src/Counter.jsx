@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 
 class counter extends Component {
   componentWillReceiveProps(nextProps) {
@@ -8,7 +9,7 @@ class counter extends Component {
   componentWillUpdate() {
     console.log("will update");
   }
-
+  
   componentDidUpdate() {
     console.log("already updated");
   }
@@ -24,5 +25,10 @@ class counter extends Component {
     );
   }
 }
+
+counter.propTypes = {
+  list: PropTypes.array.isRequired
+};
+
 
 export default counter;
