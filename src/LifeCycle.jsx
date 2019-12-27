@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 import Conter from "./Counter";
 
@@ -22,28 +23,46 @@ class LifeCycle extends Component {
     console.log("component mounted");
   }
 
+
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log(prevState.counter, "getSnapshotBeforeUpdate");
+    return null;
+  }
+  
+  componentDidUpdate() {
+    console.log( this.state.counter, "componentDidUpdate");
+  }
+
   increaseCounter = () => {
     let list = this.state.list;
     list.push("text");
     this.setState({
-      counter: this.state.counter,
+      counter: this.state.counter +1,
       list
     });
   };
 
-  //componentDidCatch() only works for catching errors thrown by a components children
+//only works for catching errors thrown by a components children
   componentDidCatch() {
     console.log("error happend");
   }
 
+
+
   shouldComponentUpdate(nextProp, nextState) {
     return true;
+  }
+
+  componentWillUnmount(){
+    console.log("componentWillUnmount");
   }
 
   render() {
     return (
       <div>
         <button onClick={this.increaseCounter}> Try me out</button>
+        <Link to="/p1"> Favorite Color </Link>
         <Conter list={this.state.list} />
       </div>
     );
