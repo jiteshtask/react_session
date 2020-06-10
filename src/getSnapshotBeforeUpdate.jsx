@@ -16,8 +16,8 @@ class GetSnapshotBeforeUpdateMethod extends React.Component {
     return null;
   }
   
-  componentDidUpdate() {
-    console.log( this.state.favoritecolor, "componentDidUpdate");
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log( this.state.favoritecolor,snapshot, "componentDidUpdate");
   }
   
   render() {
