@@ -9,7 +9,7 @@ class GetSnapshotBeforeUpdateMethod extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       this.setState({favoritecolor: "yellow"})
-    }, 1000)
+    }, 5000)
   }
   getSnapshotBeforeUpdate(prevProps, prevState) {
     console.log(prevState.favoritecolor, "getSnapshotBeforeUpdate");

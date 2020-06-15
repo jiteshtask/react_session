@@ -19,7 +19,7 @@ class counter extends Component {
 }
 
 counter.propTypes = {
-  list: PropTypes.array.isRequired
+  list: PropTypes.string.isRequired
 };
 
 
