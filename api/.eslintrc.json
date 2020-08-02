@@ -1,0 +1,27 @@
+{
+    "env": {
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+        "Promise": true,
+        "index": true,
+        "console": true
+    },
+    "rules": {
+        "linebreak-style": [
+            "off"        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "callback-return": [
+            "error"
+        ],
+        "no-console": 0
+    }
+}

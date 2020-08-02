@@ -1,0 +1,2 @@
+exports.contact = require('./contactController');
+

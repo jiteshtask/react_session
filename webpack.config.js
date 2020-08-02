@@ -1,51 +1,95 @@
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const path = require('path')
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const hotMiddlewareScript =
+  'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
 module.exports = {
-  entry: ["babel-polyfill", "react-hot-loader/patch", "./src/index.jsx"],
+  context: __dirname,
+  entry: {
+    app: [
+      'babel-polyfill',
+      path.resolve(__dirname, './web/app.jsx'),
+      hotMiddlewareScript
+    ]
+  },
+
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+
+  output: {
+    path: path.join(__dirname, 'assets'),
+    filename: 'js/[name].js',
+    publicPath: '/assets/dist'
+  },
+
   module: {
-    rules: [{
-        test: /\.(js|jsx)$/,
+    rules: [
+      {
         exclude: /node_modules/,
-        use: ["babel-loader"]
+        test: /\.(js|jsx)$/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015', 'react', 'stage-0']
+        }
+      },
+      {
+        test: /\.(js|jsx)$/,
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        options: {
+          emitWarning: true
+        }
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader"
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                url: false,
+                minimize: true,
+                sourceMap: true
+              }
+            }
+          ]
         })
+      },
+      {
+        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+        }
       }
     ]
   },
-  resolve: {
-    extensions: [".js", ".jsx"]
+
+  node: {
+    fs: 'empty',
+    tls: 'empty'
   },
-  output: {
-    path: path.join(__dirname + "/dist"),
-    publicPath: "/",
-    filename: "bundle.js"
-  },
+
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendors',
+      filename: 'js/vendors.js'
+    }),
+    new ExtractTextPlugin({
+      filename: '[name].css'
+    }),
     new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("dev")
+      'process.env': {
+        NODE_ENV: JSON.stringify('dev'),
+        DOMAIN: JSON.stringify('http://localhost:3000')
       }
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin("style.css"),
-    new HtmlWebpackPlugin({
-      title: "React Session",
-      inject: true
-    }), 
+    new webpack.NoEmitOnErrorsPlugin()
   ],
-  devServer: {
-    contentBase: "./dist",
-    hot: true,
-    historyApiFallback: true,
-    inline: true,
-    port: 8080
-  }
+  devtool: 'source-map'
 };
